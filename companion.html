@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SantaForShe - Night Walk</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @keyframes moveRoute {
+            0% {
+                left: 50px;
+                top: 350px;
+            }
+
+            25% {
+                left: 100px;
+                top: 275px;
+            }
+
+            50% {
+                left: 100px;
+                top: 200px;
+            }
+
+            75% {
+                left: 200px;
+                top: 150px;
+            }
+
+            100% {
+                left: 300px;
+                top: 100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="snow-container"></div>
+
+    <nav class="navbar">
+        <div class="logo">
+            🎅 SantaForShe
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="chat.html">Girl Help Girl</a>
+            <a href="companion.html">Night Walk</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="row" style="display: flex; flex-wrap: wrap; gap: 2rem;">
+            <!-- Map Area (Simulated) -->
+            <div style="flex: 2; min-width: 300px;">
+                <div class="card" style="padding: 0; overflow: hidden; height: 100%;">
+                    <div style="background: var(--pine-green); color: white; padding: 1rem;">
+                        <h2 style="margin: 0; font-size: 1.2rem;">🗺️ Safe Route Navigation</h2>
+
+                    </div>
+
+                    <div class="map-placeholder"
+                        style="background: #e9ecef; height: 400px; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                        <!-- Simulated Map Visuals -->
+                        <div
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.1; background-image: radial-gradient(#666 1px, transparent 1px); background-size: 20px 20px;">
+                        </div>
+
+                        <!-- Route Line -->
+                        <svg width="100%" height="100%" style="position: absolute;">
+                            <path d="M 50 350 Q 150 300 100 200 T 300 100" stroke="var(--safe-green)" stroke-width="5"
+                                fill="none" stroke-dasharray="10" />
+                        </svg>
+
+                        <!-- Markers -->
+                        <div style="position: absolute; bottom: 50px; left: 40px; font-size: 2rem;">👩</div>
+                        <div style="position: absolute; top: 70px; left: 280px; font-size: 2rem;">🏠</div>
+
+                        <!-- Moving dot animation -->
+                        <div class="dot"
+                            style="width: 15px; height: 15px; background: var(--santa-red); border-radius: 50%; position: absolute; animation: moveRoute 10s infinite linear;">
+                        </div>
+                    </div>
+
+                    <div style="padding: 1rem; background: #fff; border-top: 1px solid #eee;">
+                        <strong>Current Status:</strong> <span style="color: var(--safe-green);">You are on a well-lit
+                            street.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar / Tips -->
+            <div style="flex: 1; min-width: 250px;">
+                <div class="card" style="background: var(--warm-cream); border: 2px solid var(--gold);">
+                    <h3 style="color: var(--santa-red); margin-top: 0;">🎅 Santa's Watching Over You</h3>
+
+                    <div class="tip-box" style="margin-top: 1.5rem;">
+                        <div class="tip" style="margin-bottom: 1rem;">
+                            <strong>💡 Stay Visible</strong>
+                            <p style="margin: 5px 0;">Keep to the main roads where there are street lights.</p>
+                        </div>
+                        <div class="tip" style="margin-bottom: 1rem;">
+                            <strong>👀 Stay Alert</strong>
+                            <p style="margin: 5px 0;">Avoid wearing headphones or looking down at your phone constantly.
+                            </p>
+                        </div>
+
+                        <div class="reassurance"
+                            style="background: white; padding: 1rem; border-radius: 8px; margin-top: 2rem; text-align: center;">
+                            <p style="font-style: italic; color: var(--pine-green);">"I'm tracking your live location.
+                                If you stop moving for 3 mins, I'll alert your friends."</p>
+                            <small>- Santa Guardian</small>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="shareOnWhatsApp()"
+                        style="width: 100%; margin-top: 1.5rem; background: #25D366; border-color: #25D366; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <span style="font-size: 1.2rem;">📱</span> Share Live Location (WhatsApp + SMS)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>"Not all heroes wear red... some wear hoodies." | 🎄 SantaForShe 2025</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="main.js"></script>
+</body>
+
+</html>

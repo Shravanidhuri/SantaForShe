@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SantaForShe</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Leaflet & Routing Machine CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+</head>
+
+<body>
+    <!-- Splash Screen -->
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-bg">
+        <div class="splash-icon">🎅✨</div>
+        <h1 class="splash-title">SantaForShe</h1>
+        <p class="splash-subtitle">Empowering Safety. Empowering You.</p>
+    </div>
+    <div id="snow-container"></div>
+
+    <nav class="navbar">
+        <div class="logo">
+            🎅 SantaForShe
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <!-- <a href="panic.html">Safe Call</a> Removed -->
+            <a href="chat.html">Girl Help Girl</a>
+            <a href="companion.html">Night Walk</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="hero text-center" style="margin-top: 5vh;">
+            <h1 style="color: var(--santa-red); font-size: 3rem; margin-bottom: 0.5rem;">🎄 SantaForShe</h1>
+            <h3 style="color: var(--pine-green); font-style: italic;">“Not all heroes wear red… some wear hoodies.”</h3>
+
+            <!-- Safe Call Button Removed as requested -->
+
+
+
+            <!-- Safe Route Map Section -->
+            <section id="safe-route-map"
+                style="margin-top: 4rem; text-align: left; background: rgba(255, 255, 255, 0.9); padding: 2rem; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: relative;">
+                <button onclick="toggleMapTheme()" id="theme-toggle"
+                    style="position: absolute; top: 2rem; right: 2rem; z-index: 1000; background: var(--santa-red); color: white; border: none; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                    ☀️ Light Mode
+                </button>
+
+                <!-- SOS Button (Top Left) -->
+                <button onclick="triggerSOS()"
+                    style="position: absolute; top: 2rem; left: 2rem; z-index: 1000; background: var(--panic-color); color: white; border: 2px solid white; padding: 0.5rem 1.2rem; border-radius: 50px; cursor: pointer; font-weight: 800; box-shadow: 0 0 10px rgba(255,0,0,0.5); animation: pulse-red 2s infinite;">
+                    🚨 SOS
+                </button>
+
+                <h2 style="color: var(--santa-red); text-align: center; margin-bottom: 1.5rem;">📍 Find Your Safest
+                    Route</h2>
+
+                <div class="route-inputs"
+                    style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                    <input type="text" id="from-location" placeholder="From (e.g., Connaught Place)"
+                        style="padding: 0.8rem; border: 2px solid var(--pine-green); border-radius: 8px; width: 100%; max-width: 300px;">
+                    <input type="text" id="to-location" placeholder="To (e.g., Hauz Khas)"
+                        style="padding: 0.8rem; border: 2px solid var(--pine-green); border-radius: 8px; width: 100%; max-width: 300px;">
+                    <button onclick="calculateRoute()"
+                        style="background: var(--santa-red); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: bold; transition: transform 0.2s;">
+                        Find Route 🚀
+                    </button>
+                </div>
+                <!-- Status Log for User Feedback -->
+                <div id="status-log"
+                    style="text-align:center; font-weight:bold; height: 1.5rem; color: var(--santa-red); margin-bottom: 1rem;">
+                </div>
+
+                <div id="map"
+                    style="height: 500px; width: 100%; border-radius: 10px; border: 2px solid var(--pine-green); z-index: 1;">
+                </div>
+
+
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>"Not all heroes wear red... some wear hoodies." | 🎄 SantaForShe 2025</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>

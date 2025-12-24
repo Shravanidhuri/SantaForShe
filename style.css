@@ -1,0 +1,301 @@
+:root {
+    /* Christmas Theme Colors */
+    --santa-red: #D42426;
+    --pine-green: #165B33;
+    --snow-white: #F0F0F0;
+    --gold: #F8B229;
+    --night-blue: #0F172A;
+    /* For dark mode/contrast */
+    --warm-cream: #FAF3E0;
+
+    /* Functional Colors */
+    --panic-color: #FF0000;
+    --safe-green: #2ECC71;
+    --text-primary: #333;
+    --text-light: #FFF;
+}
+
+@keyframes map-pulse {
+    0% {
+        stroke-opacity: 1;
+        fill-opacity: 0.5;
+        transform: scale(0.9);
+    }
+
+    70% {
+        stroke-opacity: 0;
+        fill-opacity: 0;
+        transform: scale(2);
+    }
+
+    100% {
+        stroke-opacity: 0;
+        fill-opacity: 0;
+        transform: scale(2);
+    }
+}
+
+.pulsing-circle {
+    animation: map-pulse 2s infinite;
+    transform-origin: center;
+}
+
+body {
+    font-family: 'Outfit', 'Segoe UI', sans-serif;
+    background-color: var(--warm-cream);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Snowfall Container */
+#snow-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.snowflake {
+    position: absolute;
+    top: -10px;
+    color: #FFF;
+    font-size: 1em;
+    font-family: Arial;
+    text-shadow: 0 0 1px #000;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--santa-red);
+    color: var(--text-light);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    margin-left: 1.5rem;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--gold);
+}
+
+/* Main Container */
+.container {
+    flex: 1;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: var(--santa-red);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: var(--pine-green);
+    color: white;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer */
+footer {
+    background-color: var(--pine-green);
+    color: var(--text-light);
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: auto;
+}
+
+/* Utilities */
+.text-center {
+    text-align: center;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Animations */
+/* Animations */
+@keyframes pulse-red {
+    0% {
+        box-shadow: 0 0 0 0 rgba(212, 36, 38, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 20px rgba(212, 36, 38, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(212, 36, 38, 0);
+    }
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes sparkle {
+
+    0%,
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.splash-bg {
+    background: linear-gradient(135deg, #ff3366 0%, #ba265d 100%);
+    /* Elegant Pink-Red */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease-out;
+}
+
+.splash-icon {
+    font-size: 5rem;
+    animation: float-up 1s ease-out forwards;
+    filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.2));
+}
+
+.splash-title {
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+    margin-top: 1rem;
+    letter-spacing: 2px;
+    animation: float-up 1s ease-out 0.3s forwards;
+    /* Delay */
+    opacity: 0;
+    /* Star hidden */
+}
+
+.splash-subtitle {
+    color: #ffd1dc;
+    /* Soft pink text */
+    font-style: italic;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+    animation: float-up 1s ease-out 0.6s forwards;
+    /* More delay */
+    opacity: 0;
+}
+
+/* Map specific overrides */
+.leaflet-container {
+    background: #242424 !important;
+    /* Matches dark theme */
+    font-family: 'Outfit', sans-serif;
+}
+
+/* Force Green Route Line */
+path.leaflet-interactive,
+.neon-route-line {
+    stroke: #00FF00 !important;
+    /* Bright Green */
+    stroke-width: 10px !important;
+    stroke-opacity: 1 !important;
+    filter: drop-shadow(0 0 8px rgba(0, 255, 0, 0.8));
+    /* Strong Neon Glow */
+    stroke-linecap: round;
+}
+
+/* Hide Routing Instructions Container to keep UI clean */
+.leaflet-routing-container {
+    display: none !important;
+}
+
+/* Custom Marker Icons coloring handled in JS, but ensure popup text is readable */
+.leaflet-popup-content-wrapper {
+    background: var(--santa-red);
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+}
+
+.leaflet-popup-tip {
+    background: var(--santa-red);
+}

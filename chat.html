@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SantaForShe - Chat</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .message {
+            margin-bottom: 1rem;
+            max-width: 80%;
+        }
+
+        .message.received {
+            align-self: flex-start;
+        }
+
+        .message.sent {
+            align-self: flex-end;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .message .sender {
+            font-size: 0.8rem;
+            color: #666;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .message p {
+            background: #f0f2f5;
+            padding: 10px 15px;
+            border-radius: 15px;
+            margin: 0;
+            display: inline-block;
+            border-bottom-left-radius: 2px;
+            line-height: 1.4;
+        }
+
+        .message.sent p {
+            background: var(--santa-red);
+            color: white;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 2px;
+        }
+
+        .speaking {
+            animation: pulse-ring 1.5s infinite;
+            box-shadow: 0 0 0 0 rgba(212, 36, 38, 0.7);
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(212, 36, 38, 0.7);
+            }
+
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(212, 36, 38, 0);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(212, 36, 38, 0);
+            }
+        }
+
+        .speaking {
+            animation: pulse-ring 1.5s infinite;
+            box-shadow: 0 0 0 0 rgba(212, 36, 38, 0.7);
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(212, 36, 38, 0.7);
+            }
+
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(212, 36, 38, 0);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(212, 36, 38, 0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="snow-container"></div>
+
+    <nav class="navbar">
+        <div class="logo">
+            🎅 SantaForShe
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="chat.html">Girl Help Girl</a>
+            <a href="companion.html">Night Walk</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="chat-wrapper"
+            style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; height: 80vh;">
+            <div class="chat-header"
+                style="background: var(--santa-red); color: white; padding: 1rem; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div id="botAvatar"
+                        style="width: 40px; height: 40px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                        👩‍🦰</div>
+                    <div>
+                        <h2 style="margin: 0; font-size: 1.2rem;">Holly - Your Safety Sis</h2>
+                        <small>Always here to listen • Online</small>
+                    </div>
+                </div>
+                <span style="font-size: 1.5rem;">🎄</span>
+            </div>
+
+            <div id="chat-messages"
+                style="flex: 1; background: white; padding: 1rem; overflow-y: auto; border: 1px solid #ddd; border-top: none;">
+                <!-- Bot Intro Message -->
+                <div class="message received">
+                    <span class="sender">Holly</span>
+                    <p>Hi there! I'm Holly, your virtual big sister. 🎅❤️<br>I'm here to keep you company, give safety
+                        tips, or just chat if you're feeling anxious. How are you feeling right now?</p>
+                </div>
+            </div>
+
+            <div class="chat-input"
+                style="background: white; padding: 1rem; border: 1px solid #ddd; border-top: none; border-radius: 0 0 12px 12px; display: flex; gap: 10px; align-items: center;">
+                <button onclick="toggleVoiceInput()" id="micBtn" class="btn"
+                    style="background: #f0f0f0; border-radius: 50%; width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;"
+                    title="Tap to speak">🎤</button>
+                <input type="text" id="msgInput" placeholder="Type or say a message..."
+                    style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 20px;">
+                <button onclick="sendMessage()" class="btn btn-primary"
+                    style="border-radius: 50%; width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center;">➤</button>
+            </div>
+            <div style="text-align: center; padding: 5px;">
+                <label style="font-size: 0.8rem; color: #666;"><input type="checkbox" id="voiceEnabled" checked> Enable
+                    Holly's Voice 🔊</label>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>"Not all heroes wear red... some wear hoodies." | 🎄 SantaForShe 2025</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="main.js"></script>
+    <script>
+        // Speech Recognition Setup
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition = null;
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.lang = 'en-US';
+
+            recognition.onstart = function () {
+                document.getElementById('micBtn').style.background = '#ffdddd';
+                document.getElementById('micBtn').style.color = '#D42426';
+                document.getElementById('micBtn').style.animation = 'pulse-red 1.5s infinite';
+            };
+
+            recognition.onend = function () {
+                document.getElementById('micBtn').style.background = '#f0f0f0';
+                document.getElementById('micBtn').style.color = 'black';
+                document.getElementById('micBtn').style.animation = 'none';
+            };
+
+            recognition.onresult = function (event) {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('msgInput').value = transcript;
+                setTimeout(sendMessage, 500); // Auto-send shortly after speaking
+            };
+        } else {
+            console.log("Web Speech API not supported in this browser.");
+            document.getElementById('micBtn').style.display = 'none';
+        }
+
+        function toggleVoiceInput() {
+            if (recognition) {
+                recognition.start();
+            } else {
+                alert("Voice input is not supported in this browser. Try Chrome or Edge!");
+            }
+        }
+
+        // Voice Synthesis Setup
+        function speak(text) {
+            if (!document.getElementById('voiceEnabled').checked) return;
+
+            // Cancel any previous speech
+            window.speechSynthesis.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            const voices = window.speechSynthesis.getVoices();
+
+            // Try to find a nice female voice
+            // Priority: Google US English -> Microsoft Zira -> Any Female -> First available
+            const femaleVoice = voices.find(voice => voice.name.includes('Google US English')) ||
+                voices.find(voice => voice.name.includes('Zira')) ||
+                voices.find(voice => voice.name.includes('Samantha')) ||
+                voices.find(voice => voice.name.toLowerCase().includes('female')) ||
+                voices[0];
+
+            if (femaleVoice) utterance.voice = femaleVoice;
+
+            utterance.pitch = 1.1; // Slightly higher pitch for younger/friendly tone
+            utterance.rate = 1.0;
+
+            // Visual feedback
+            const avatar = document.getElementById('botAvatar');
+            if (avatar) avatar.classList.add('speaking');
+
+            utterance.onend = function () {
+                if (avatar) avatar.classList.remove('speaking');
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Load voices immediately
+        if (window.speechSynthesis.onvoiceschanged !== undefined) {
+            window.speechSynthesis.onvoiceschanged = () => { };
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('msgInput');
+            const text = input.value.trim();
+
+            if (text) {
+                const chatBox = document.getElementById('chat-messages');
+
+                // Create user msg element
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'message sent';
+                msgDiv.innerHTML = `<span class="sender">You</span><p>${text}</p>`;
+
+                chatBox.appendChild(msgDiv);
+                chatBox.scrollTop = chatBox.scrollHeight;
+                input.value = '';
+
+                // Simulated Bot reply logic (Client-Side)
+                setTimeout(() => {
+                    const replyDiv = document.createElement('div');
+                    replyDiv.className = 'message received';
+
+                    let replyText = "I'm listening. Tell me more. 🎄";
+                    const lowerText = text.toLowerCase();
+
+                    // Smart Keyword Matching
+                    if (lowerText.includes("scared") || lowerText.includes("afraid") || lowerText.includes("panic") || lowerText.includes("danger") || lowerText.includes("help")) {
+                        replyText = "It's okay to feel that way. I'm right here. 🛡️ If you feel in danger, please tap the 'SOS' button immediately. Shall I stay on the line with you?";
+                    }
+                    else if (lowerText.includes("hello") || lowerText.includes("hi") || lowerText.includes("hey")) {
+                        replyText = "Hey there! 🎄 I'm Holly. I'm here to keep you company while you walk. Where are you walking from?";
+                    }
+                    else if (lowerText.includes("walking") || lowerText.includes("home") || lowerText.includes("back")) {
+                        replyText = "Walking home can be tiring but you're doing great! Keep your steps steady. I'm right here with you. 🚶‍♀️✨ Is the street well-lit?";
+                    }
+                    else if (lowerText.includes("party") || lowerText.includes("school") || lowerText.includes("college") || lowerText.includes("work") || lowerText.includes("office")) {
+                        replyText = "Hope you had a good time there! Transitioning from a busy place to a quiet walk can feel strange. Stay alert and keep moving. 🎓🎉";
+                    }
+                    else if (lowerText.includes("bad day") || lowerText.includes("didn't have a nice day") || lowerText.includes("sad") || lowerText.includes("upset") || lowerText.includes("tired")) {
+                        replyText = "I'm sorry to hear that, sis. 😔 Some days are just tough. But hey, you're getting through it right now. Once you're home, you can relax. I'm proud of you.";
+                    }
+                    else if (lowerText.includes("nice day") || lowerText.includes("good day") || lowerText.includes("happy") || lowerText.includes("great")) {
+                        replyText = "That's awesome! I love hearing good news. 🌟 Hold onto that positive feeling while you walk. It makes the journey feel faster!";
+                    }
+                    else if (lowerText.includes("thank")) {
+                        replyText = "Anytime, sis! Stay safe and warm. ❤️";
+                    }
+                    else if (lowerText.includes("alone")) {
+                        replyText = "You're not alone! I'm watching over you, and so is Santa. 🎅 Keep your head up and stay aware of your surroundings.";
+                    }
+                    else if (lowerText.includes("bye")) {
+                        replyText = "Bye! Stay safe and happy holidays. 🎅";
+                    }
+                    else if (lowerText.includes("joke")) {
+                        replyText = "Why does Santa go down the chimney? Because it soots him! 😂";
+                    }
+                    else if (lowerText.includes("story")) {
+                        replyText = "Once upon a time... a brave girl walked home safely because she trusted her instincts. That's you! 🌟";
+                    }
+
+                    replyDiv.innerHTML = `<span class="sender">Holly</span><p>${replyText}</p>`;
+                    chatBox.appendChild(replyDiv);
+                    chatBox.scrollTop = chatBox.scrollHeight;
+
+                    // Speak the reply
+                    speak(replyText);
+
+                }, 1000);
+            }
+        }
+
+        // Allow enter key
+        document.getElementById('msgInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+
+</html>
