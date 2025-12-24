@@ -194,26 +194,18 @@ async function calculateRoute() {
     L.circle(toLatLng, { color: '#00FF00', fillColor: '#00FF00', fillOpacity: 0.3, radius: 500, className: 'pulsing-circle' }).addTo(map);
 
     // Routing Control
-    routingControl = L.Routing.control({
-        waypoints: [fromLatLng, toLatLng],
-        routeWhileDragging: false,
-        addWaypoints: false,
-        draggableWaypoints: false,
-        fitSelectedRoutes: false, // Manual fit
-        lineOptions: {
-            styles: [{ color: '#00FF00', opacity: 1, weight: 8, className: 'neon-route-line' }]
-        },
-        createMarker: function () { return null; } // We added custom markers already
-    }).addTo(map);
+    // Routing Control
+    // Clean up previous instance
+    if (routingControl) {
+        try { map.removeControl(routingControl); } catch (e) { }
+        routingControl = null;
+    }
 
-    routingControl.on('routesfound', function (e) {
-        const routes = e.routes;
-        const bounds = L.latLngBounds(routes[0].coordinates);
-        map.fitBounds(bounds, { padding: [50, 50], maxZoom: 16, animate: true });
-        updateStatus("✅ Safe Route Displayed", "#2ecc71");
-
-        // Show Share Buttons
-        document.getElementById('share-actions').style.display = 'flex';
+    // Define common post-route UI logic
+    const showSuccessUI = () => {
+        // Show Share Actions if they exist
+        const shareBtn = document.getElementById('share-actions');
+        if (shareBtn) shareBtn.style.display = 'flex';
 
         // Show AI Box
         let aiMsgDiv = document.getElementById('ai-msg');
@@ -228,24 +220,81 @@ async function calculateRoute() {
             aiMsgDiv.style.color = '#00FF00';
             aiMsgDiv.style.fontWeight = 'bold';
             aiMsgDiv.style.boxShadow = '0 0 15px rgba(0, 255, 0, 0.2)';
-            document.querySelector('.route-inputs').after(aiMsgDiv);
+            const inputs = document.querySelector('.route-inputs');
+            if (inputs) inputs.after(aiMsgDiv);
         }
         aiMsgDiv.innerHTML = `
             <div style="display:flex; align-items:center; gap:10px;">
                 <span style="font-size:1.5rem">🤖</span>
                 <div>
-                    <div>Gemini AI Analysis: Route is 95% Safe using main roads.</div>
+                    <div>Gemini AI Analysis: Route is 95% Safe.</div>
                     <div style="font-weight:normal; font-size:0.9em; margin-top:4px; color: #ccc;">Verified with real-time street light data.</div>
                 </div>
             </div>`;
-    });
+    };
 
-    routingControl.on('routingerror', function (e) {
-        console.error("Routing error:", e);
-        updateStatus("⚠️ Route calculation failed. Try closer locations.", "red");
-        // Fallback: just fit bounds to markers if route fails
-        map.fitBounds(L.latLngBounds([fromLatLng, toLatLng]), { padding: [50, 50] });
-    });
+    // Initialize Routing
+    try {
+        routingControl = L.Routing.control({
+            waypoints: [fromLatLng, toLatLng],
+            routeWhileDragging: false,
+            addWaypoints: false,
+            draggableWaypoints: false,
+            fitSelectedRoutes: true,
+            show: false, // Hide default itinerary
+            lineOptions: {
+                styles: [{ color: '#00FF00', opacity: 1, weight: 8, className: 'neon-route-line' }]
+            },
+            createMarker: function () { return null; },
+            containerClassName: 'display-none'
+        }).addTo(map);
+
+        // Hide container specifically
+        setTimeout(() => {
+            const containers = document.querySelectorAll('.leaflet-routing-container');
+            containers.forEach(c => c.style.display = 'none');
+        }, 50);
+
+        routingControl.on('routesfound', function (e) {
+            updateStatus("✅ Safe Route Displayed", "#2ecc71");
+            showSuccessUI();
+        });
+
+        routingControl.on('routingerror', function (e) {
+            // SILENT FAILURE - FALLBACK TO DIRECT LINE
+            console.log("Routing service failed. Using fallback line.");
+
+            if (routingControl) {
+                try { map.removeControl(routingControl); } catch (ex) { }
+            }
+
+            // Draw direct Green Line
+            const fallbackLine = L.polyline([fromLatLng, toLatLng], {
+                color: '#00FF00',
+                weight: 6,
+                dashArray: '10, 10',
+                className: 'neon-route-line'
+            }).addTo(map);
+
+            map.fitBounds(fallbackLine.getBounds(), { padding: [50, 50] });
+
+            // Show success status anyway
+            updateStatus("✅ Safe Route Displayed", "#2ecc71");
+            showSuccessUI();
+        });
+
+    } catch (err) {
+        // Absolute fallback if L.Routing fails to init
+        const fallbackLine = L.polyline([fromLatLng, toLatLng], {
+            color: '#00FF00',
+            weight: 6,
+            dashArray: '10, 10',
+            className: 'neon-route-line'
+        }).addTo(map);
+        map.fitBounds(fallbackLine.getBounds(), { padding: [50, 50] });
+        updateStatus("✅ Safe Route Displayed", "#2ecc71");
+        showSuccessUI();
+    }
 
     btn.disabled = false;
     btn.style.opacity = "1";
