@@ -56,30 +56,40 @@
             <!-- Safe Route Map Section -->
             <section id="safe-route-map"
                 style="margin-top: 4rem; text-align: left; background: rgba(255, 255, 255, 0.9); padding: 2rem; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: relative;">
-                <button onclick="toggleMapTheme()" id="theme-toggle"
-                    style="position: absolute; top: 2rem; right: 2rem; z-index: 1000; background: var(--santa-red); color: white; border: none; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-                    ☀️ Light Mode
-                </button>
+
 
                 <!-- SOS Button (Top Left) -->
-                <button onclick="triggerSOS()"
-                    style="position: absolute; top: 2rem; left: 2rem; z-index: 1000; background: var(--panic-color); color: white; border: 2px solid white; padding: 0.5rem 1.2rem; border-radius: 50px; cursor: pointer; font-weight: 800; box-shadow: 0 0 10px rgba(255,0,0,0.5); animation: pulse-red 2s infinite;">
-                    🚨 SOS
-                </button>
+
 
                 <h2 style="color: var(--santa-red); text-align: center; margin-bottom: 1.5rem;">📍 Find Your Safest
                     Route</h2>
 
                 <div class="route-inputs"
-                    style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
-                    <input type="text" id="from-location" placeholder="From (e.g., Connaught Place)"
-                        style="padding: 0.8rem; border: 2px solid var(--pine-green); border-radius: 8px; width: 100%; max-width: 300px;">
-                    <input type="text" id="to-location" placeholder="To (e.g., Hauz Khas)"
-                        style="padding: 0.8rem; border: 2px solid var(--pine-green); border-radius: 8px; width: 100%; max-width: 300px;">
-                    <button onclick="calculateRoute()"
-                        style="background: var(--santa-red); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: bold; transition: transform 0.2s;">
-                        Find Route 🚀
-                    </button>
+                    style="display: flex; flex-direction: column; gap: 1rem; align-items: center; margin-bottom: 1.5rem;">
+
+                    <!-- Row 1: Inputs -->
+                    <div style="display: flex; gap: 1rem; width: 100%; justify-content: center;">
+                        <input type="text" id="from-location" placeholder="From (e.g., Connaught Place)"
+                            style="padding: 0.8rem; border: 2px solid var(--pine-green); border-radius: 8px; flex: 1; max-width: 300px;">
+                        <input type="text" id="to-location" placeholder="To (e.g., Hauz Khas)"
+                            style="padding: 0.8rem; border: 2px solid var(--pine-green); border-radius: 8px; flex: 1; max-width: 300px;">
+                    </div>
+
+                    <!-- Row 2: Buttons -->
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+                        <button onclick="calculateRoute()"
+                            style="background: var(--santa-red); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: bold; transition: transform 0.2s;">
+                            Find Route 🚀
+                        </button>
+                        <button onclick="triggerSOS()"
+                            style="background: var(--panic-color); color: white; border: 2px solid white; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 800; box-shadow: 0 0 10px rgba(255,0,0,0.5); animation: pulse-red 2s infinite;">
+                            🚨 SOS
+                        </button>
+                        <button onclick="toggleMapTheme()" id="theme-toggle"
+                            style="background: var(--pine-green); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                            ☀️ Light Mode
+                        </button>
+                    </div>
                 </div>
                 <!-- Status Log for User Feedback -->
                 <div id="status-log"
